@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="img/favicon.ico">
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+    <script src="https://unpkg.com/moralis/dist/moralis.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <title>CryptoShack</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="album.css" rel="stylesheet">
+  </head>
+
+  <body>
+
+    <header>
+      <div class="collapse bg-dark" id="navbarHeader">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-8 col-md-7 py-4">
+              <h4 class="text-white">About</h4>
+              <p class="text-muted">CryptoShack about information.</p>
+            </div>
+            <div class="col-sm-4 offset-md-1 py-4">
+              <h4 class="text-white">Contact</h4>
+              <ul class="list-unstyled">
+                <li><a href="#" class="text-white">Follow on Twitter</a></li>
+                <li><a href="#" class="text-white">Like on Facebook</a></li>
+                <li><a href="#" class="text-white">Email me</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="navbar navbar-dark bg-dark box-shadow">
+        <div class="container d-flex justify-content-between">
+          <a href="#" class="navbar-brand d-flex align-items-center">
+            <strong>CryptoShack</strong>
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main role="main">
+      <section class="jumbotron text-center">
+        <div class="container">
+          <h1 class="jumbotron-heading">CryptoShack</h1>
+          <p class="lead text-muted"></p>
+          <p>
+            <!--div class="input-group mb-3">
+              <input type="text" id="nftaddress" class="form-control" placeholder="ETH Address" aria-label="ETH Address" aria-describedby="basic-addon2">
+            </div>
+            <button class="btn" onclick="">Search</button-->
+            <button class="btn btn-primary" onclick="login()" id="login">Connect My Wallet</button>
+            <!--button class="btn btn-secondary" onclick="getNFT()">Show My NFTs</button-->
+            <!--a href="#" class="btn btn-primary my-2">Burn</a>
+            <a href="#" class="btn btn-secondary my-2">Stake</a-->
+            
+          </p>
+          <p id="nft-loading" class="hide" style="font-style:italic;">Please wait at least 30 seconds for your NFTs to appear.</p>
+          <h1 class="header text-center"> <strong>Score Card</strong></h1>
+		<div class="table-responsive">
+			<table class="table table-condensed table-bordered" id="score-table">
+				<tr class="success text-center">
+					<th class="text-left">NFT</th>
+					<td>1</td>
+					<td>2</td>
+					<td>3</td>
+					<td>4</td>
+					<td>5</td>
+					<td>6</td>
+					<td>7</td>
+					<td>8</td>
+					<td>9</td>
+					<th class="text-uppercase"><strong>Out</strong></th>
+					<td>10</td>
+					<td>11</td>
+					<td>12</td>
+					<td>13</td>
+					<td>14</td>
+					<td>15</td>
+					<td>16</td>
+					<td>17</td>
+					<td>18</td>
+					<th class="text-uppercase">In</th>
+					<th class="text-uppercase">Total</th>
+				</tr>
+				<tr class="text-center">
+					<td class="text-left"><strong>Player 1</strong></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td id="out-total"></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td id="in-total"></td>
+					<td id="score-total"></td>
+				</tr>
+			</table>
+		</div>
+        </div>
+      </section>
+      
+      <div class="album py-5 bg-light">
+        <div class="container">
+
+          <div class="row" id="card-group">
+            <div class="col-md-4">
+              <div id="summary-card" class="card hide text-white bg-dark mb-4 box-shadow">
+                <div class="card-header"></div>
+                <div class="card-body">
+                  <h5 class="card-title"><span id="selected-points">0</span> Points</h5>
+                  <!--h5 class="card-text"><span id="selected-nfts">0</span> Selected</h5-->
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <button type="button" id="burn-btn" class="btn disabled" onclick="burnNFTs(this)">
+                        <img src="img/Burn_Button.png" width="100" />
+                   </button>
+                   <!--button type="button" class="btn btn-outline-secondary" onclick="stakeNFTs()"><h2>Stake</h2></button-->
+                    </div>
+                    <small class="text-muted"></small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <footer class="text-muted">
+      <div class="container">
+        <p class="float-right">
+          <a href="#">Back to top</a>
+        </p>
+        <p>&copy; CryptoShack 2022</p>
+      </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="js/jquery-slim.min.js"><\/script>')</script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/holder.min.js"></script>
+    <script>
+      // connect to Moralis server
+			Moralis.initialize("OFJgSaTDOJ9APHVcgCNIKQ1QKBlVithtD6FnKhJ3");
+        Moralis.serverURL = "https://0a3fqc9fi2ni.usemoralis.com:2053/server";
+
+      // connect to metamask wallet
+      async function login() {
+        var user = await Moralis.authenticate()
+        
+        document.getElementById('login').innerHTML = 'Connected'
+        document.getElementById('login').setAttribute('data-eth-add', user.get('ethAddress'));
+        const web3Provider = await Moralis.enableWeb3();
+          console.log(web3Provider)
+          document.getElementById('nft-loading').classList.remove('hide')
+        getNFT();
+      }
+      
+        async function selectNFT(e){
+          let points = parseInt(e.getAttribute("data-points"));
+          let totalPoints = parseInt(document.getElementById("selected-points").innerHTML)
+          console.log(points)
+          console.log(totalPoints)
+          if(e.classList.contains("selected-nft")){
+            e.classList.remove("selected-nft")
+            totalPoints -= points;
+          } else {
+            e.classList.add("selected-nft")
+
+            totalPoints += points;
+            
+          }
+          if(totalPoints == 4){
+            document.getElementById("burn-btn").classList.remove('disabled')
+          } else {
+            if(!document.getElementById("burn-btn").classList.contains("disabled")){
+              document.getElementById("burn-btn").classList.add('disabled')
+            }
+          }
+          var table = document.getElementById("score-table");
+          // only care about cells in the 2nd row
+          // clear all previously stored points
+          for (var j = 1, col; col = table.rows[1].cells[j]; j++) {
+                table.rows[1].cells[j].innerHTML = '';
+          }
+
+            // iterate through nft class that also has selected-nft as a class = selected items
+            var nfts = document.getElementsByClassName("selected-nft");
+            let selected_nft_points = ''
+            for (var i = 0; i < nfts.length; i++) {
+              for (var j = 1, col; col = table.rows[1].cells[j]; j++) {
+                var cell_contents = table.rows[1].cells[j].innerHTML;
+
+                cell_contents = (cell_contents.trim) ? cell_contents.trim() : cell_contents.replace(/^\s+/,'');
+                if(cell_contents == '' && j != 10 && j != 20 && j != 21  ){
+                  // if row is empty, then add points
+                  selected_nft_points = nfts.item(i).getAttribute('data-points')
+                  table.rows[1].cells[j].innerHTML = selected_nft_points
+                  break;
+                } else if(j == 10){
+                  // sum points from 1 to 9
+                  var out_total = parseInt(table.rows[1].cells[1].innerHTML) + parseInt(table.rows[1].cells[2].innerHTML) + parseInt(table.rows[1].cells[3].innerHTML) + parseInt(table.rows[1].cells[4].innerHTML) + parseInt(table.rows[1].cells[5].innerHTML) + parseInt(table.rows[1].cells[6].innerHTML) + parseInt(table.rows[1].cells[7].innerHTML) + parseInt(table.rows[1].cells[8].innerHTML) + parseInt(table.rows[1].cells[9].innerHTML);
+
+                  table.rows[1].cells[j].innerHTML = out_total
+                  break;
+                } else if(j == 20){
+                  // sum points from 11 to 19
+                  var in_total = parseInt(table.rows[1].cells[11].innerHTML) + parseInt(table.rows[1].cells[12].innerHTML) + parseInt(table.rows[1].cells[13].innerHTML) + parseInt(table.rows[1].cells[14].innerHTML) + parseInt(table.rows[1].cells[15].innerHTML) + parseInt(table.rows[1].cells[16].innerHTML) + parseInt(table.rows[1].cells[17].innerHTML) + parseInt(table.rows[1].cells[18].innerHTML) + parseInt(table.rows[1].cells[19].innerHTML);
+                  
+                  table.rows[1].cells[j].innerHTML = in_total
+                  break;      
+                } else if (j == 21){
+                  // calc total from j 10 and j 20
+                  let total_points = parseInt(table.rows[1].cells[10].innerHTML) + parseInt(table.rows[1].cells[20].innerHTML)
+                  table.rows[1].cells[j].innerHTML = total_points
+                  break;
+                }
+              }
+            }
+      
+          document.getElementById("selected-points").innerHTML = totalPoints
+
+        }
+        async function burnNFTs(e){
+          if(e.classList.contains('disabled')){
+            console.log('cannot burn NFTs')
+          } else {
+            console.log('burn NFTs')
+            // https://etherscan.io/address/0x34997f9c19465ec01b7ed2ab0e61e2a388702790
+            //if exchange allowed set on the contract - read from a contract api call and see if that param is set to true
+            // then burn is allowed
+            // burning is the exchange function
+
+            var nfts = document.getElementsByClassName("selected-nft");
+            var selected_nft_token_ids = []
+            for (var i = 0; i < nfts.length; i++) {
+              // nft token id = data-nft-token-id
+              selected_nft_token_ids.push(nfts.item(i).getAttribute('data-nft-token-id'))
+              nfts.item(i).classList.add('hide');
+            }
+          
+            const ABI = [
+            {"inputs":[{"internalType":"uint256[]","name":"_tokenIds","type":"uint256[]"}],"name":"exchange","outputs":[],"stateMutability":"nonpayable","type":"function"}
+            ];
+          
+            const sendOptions = {
+              contractAddress: "0x34997f9c19465ec01b7ed2ab0e61e2a388702790",
+              functionName: "exchange",
+              abi: ABI,
+              params: {
+                _tokenIds: selected_nft_token_ids
+              }
+            };
+            /*try {*/
+              const message = await Moralis.executeFunction(sendOptions).then(response => {
+                  console.log(response);
+              }).catch(e => {
+                  alert(e);
+              });
+            
+              /*await message.wait();
+              console.log(message)*/
+            /*} catch(e) {
+                console.log(e);
+            }*/
+            
+          }
+          
+        }
+        async function stakeNFTs(){
+          console.log('stake NFTs')
+          // staking isnt open until 3/25
+
+          /*var nfts = document.getElementsByClassName("selected-nft");
+          var selected_nft_token_ids = ''
+          for (var i = 0; i < nfts.length; i++) {
+            // nft token id = data-nft-token-id
+            selected_nft_token_ids += nfts.item(i).getAttribute('data-nft-token-id')+', '
+          }
+          console.log(selected_nft_token_ids)*/
+        }
+        async function getNFT(){
+          /* CHANGE THIS */
+          /*let address = document.getElementById('login').getAttribute('data-eth-add');
+          
+          if(!address){*/
+          let address = "0x2ea252d10dee212b4b13a5d7c9941b27972ad6b9"
+          //}
+          const options = { 
+              chain: 'eth', 
+              address: address
+          };
+          
+          const ethNFTs = await Moralis.Web3.getNFTs(options);
+          const cryptoshack_add = '0x34997f9c19465ec01b7ed2ab0e61e2a388702790'
+          if(ethNFTs){
+            
+            //Loop over the array
+            ethNFTs.forEach( e => {
+                if(e.token_address == cryptoshack_add){
+                  console.log('you have cryptoshack nfts')
+                  document.querySelector('#summary-card').classList.remove('hide') 
+                  console.log(document.querySelector('#summary-card').classList)
+                  let url = e.token_uri.replace(/\0/g, '');
+                  var token_id = e.token_id;
+                  fetch(url)
+                  .then(response => response.json())
+                  .then(data => {
+                      // Golden Gopher - name contains Golden (another way to detect is trait_type FUR value Gold Fur) - 4 points
+                      // Caddies - are 2 points - caddy in the name
+                      // Gopher - 1 point - has to contain gopher in the name (does not equal golden fur as the FUR attribute)
+                      let points = false;
+                      if(data.name.includes("Golden")){
+                        points = '4 Points' 
+                      } else if(data.name.includes("Gopher")){
+                        points = '1 Point'
+                      } else if(data.name.includes("CADDY")){
+                        points = '2 Points'
+                      }
+
+                      // can select all for staking
+                      
+                      // can only select 4 points worth for burning
+
+                      let currentDiv = document.getElementById("card-group");
+                      
+                        let content = `
+                        <div class="col-md-4">
+                          <div class="card nft mb-4 box-shadow" data-points="${ points }" onclick="selectNFT(this)" data-nft-token-id="${token_id}">
+                            <img class="card-img-top" src="${data.image}" style="max-width:100%;" alt="Card image cap">
+                            <div class="card-body">
+                              <p class="card-text">${data.name}</p>
+                              <div class="d-flex justify-content-between align-items-center">
+                                <!--div class="btn-group">
+                                  <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                  <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                </div-->
+                                <small class="text-muted">${ points }</small>
+                              </div>
+                            </div>
+                          </div>
+                        </div>`
+                        currentDiv.innerHTML += content;
+                    })
+                }
+            })
+            
+          } else {
+            console.log("you don't have any cryptoshack nfts")
+            document.getElementById('summary-card').classList.add('hide')
+            
+            document.querySelector('#card-group').closest('.container').innerHTML = '<section class="jumbotron text-center"><h2 class="jumbotron-heading">You don\'t have any CryptoShack NFTs</h2></section>'
+          }
+          
+        }
+
+
+    </script>
+  </body>
+</html>
